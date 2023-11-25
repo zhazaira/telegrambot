@@ -1,8 +1,8 @@
 from django.core.management.base import BaseCommand
 import telebot
-from shop.models import Product
+from programming.models import Programming
 
-bot = telebot.TeleBot("6301458097:AAGXLQRv4dmFUH0V-CyjHTenX3dxYykAZms") # Вставьте сюда свой токен
+bot = telebot.TeleBot("6301458097:AAGXLQRv4dmFUH0V-CyjHTenX3dxYykAZms") 
 
 
 @bot.message_handler(commands=['start'])
@@ -11,18 +11,18 @@ def start(message):
 
 @bot.message_handler(commands=['products'])
 def products(message):
-    products = Product.objects.all()
+    products = Programming.objects.all()
     for product in products:
-        bot.send_message(message.chat.id, product.name)
+        bot.send_message(message.chat.id, product.language)
 
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
     commands = [
         "/start - Начать",
-        "/products - Показать все товары",
+        "/products - Показать все языки",
         "/help - Помощь",
-        "/add - Добавить новый товар"
+        "/add - Добавить новый язык"
         # Add more commands here
     ]
     help_text = "\n".join(commands)
@@ -34,15 +34,15 @@ def add_product(message):
     command_args = message.text.split()[1:]
 
     if len(command_args) != 2:
-        bot.reply_to(message, "Неверный формат команды. Используйте: /add <product_name> <product_price>")
+        bot.reply_to(message, "Неверный формат команды. Используйте: /add <language> <since>")
         return
 
-    product_name = command_args[0]
-    product_price = command_args[1]
+    language= command_args[0]
+    since = command_args[1]
 
     # Create a new product
-    Product.objects.create(name=product_name, price=product_price)
-    bot.reply_to(message, f"Товар {product_name} добавлен успешно с ценой {product_price}")
+    Programming.objects.create(language=language, since=since)
+    bot.reply_to(message, f"Язык {language} сушествует с {since} года")
 
 # ... The rest of your code ...
 
