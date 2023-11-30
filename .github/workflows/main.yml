@@ -23,7 +23,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: 22
         script: |
-          cd root/telegrambot/myback
+          cd root/myback
           source ./venv/bin/activate
           git pull
           python manage.py migrate
