@@ -32,8 +32,9 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: 22
         script: |
+          ls
           source ./venv/bin/activate
-          git pull
+          git pull origin main
           python manage.py migrate
           python manage.py collectstatic --noinput
           supervisorctl restart all
