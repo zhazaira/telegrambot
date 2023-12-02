@@ -33,8 +33,9 @@ jobs:
         port: 22
         script: |
           ls
-          source ./venv/bin/activate
+          source venv/bin/activate
           git pull origin main
+          cd telegrambot
           python manage.py migrate
           python manage.py collectstatic --noinput
           supervisorctl restart all
